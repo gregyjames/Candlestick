@@ -11,7 +11,13 @@ Stock/Crypto Candlestick Chart Blazor Component (because I didn't want to have t
 - Support for adding live data 
 - Responsive
 
-## Using
+## Setup
+Look at the tester project if you want to see a full example of how to use this component, but the steps are as follows:
+1. Setup Blazorise using the guide [here](https://blazorise.com/docs/start).
+2. Install Candlestick
+3. Import the component in your view.
+
+## Built with
 - Blazorise
 - Blazor-ApexCharts
 
