@@ -35,7 +35,7 @@ jobs:
       if: steps.cacheStep.outputs.cache-hit != 'true'
       run: nuget restore Octane.sln
     - name: Build
-      run: dotnet build OctaneEngine/OctaneEngine.csproj --no-restore --configuration Release /p:Version=$Env:VERSION /p:AssemblyVersion=$Env:VERSION
+      run: dotnet build Candlestick/Candlestick.csproj --no-restore --configuration Release /p:Version=$Env:VERSION /p:AssemblyVersion=$Env:VERSION
     - name: Publish NuGet package
       run: dotnet nuget push **/*.nupkg --source https://api.nuget.org/v3/index.json --api-key $Env:NUGET_API_KEY
       env:
