@@ -4,7 +4,28 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Candlestick</Title>
+    <Description>Stock/Crypto Candlestick Chart Blazor Component.</Description>
+    <Copyright>Greg James @ 2024</Copyright>
+    <PackageProjectUrl>https://github.com/gregyjames/Candlestick</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>stocks;crypto;chart;candlestick;blazor</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/gregyjames/Candlestick</RepositoryUrl>
+    <PackageIcon>Double-J-Design-Apple-Festival-App-stock.256.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\res\Double-J-Design-Apple-Festival-App-stock.256.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 
   <ItemGroup>
