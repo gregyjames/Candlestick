@@ -2,7 +2,7 @@
 [![NuGet latest version](https://badgen.net/nuget/v/Candlestick)](https://www.nuget.org/packages/Candlestick)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/Candlestick)
 # Candlestick
-Stock/Crypto Candlestick Chart Blazor Component
+Stock/Crypto Candlestick Chart Blazor Component (because I didn't want to have to pay for SyncFusion or Telerik).
 ![Example](https://github.com/gregyjames/Candlestick/blob/main/res/chart.png?raw=true)
 
 ## Features
