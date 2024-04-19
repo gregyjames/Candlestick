@@ -1,0 +1,129 @@
+﻿@using Blazorise
+@using ApexCharts
+@using Candlestick.Models
+
+<div class="my-component">
+    @if (Editable)
+    {
+        <Row>
+            <Column ColumnSize="ColumnSize.Is10">
+                     <TextEdit Text="@Ticker" Disabled="@(!Editable)"/>
+             </Column>
+             <Column ColumnSize="ColumnSize.Is2">
+             <Select TValue="int" SelectedValueChanged="@OnSelectedValueChanged">
+                 <SelectItem Value="1">Minute</SelectItem>
+                 <SelectItem Value="2">Hourly</SelectItem>
+                 <SelectItem Value="3">Daily</SelectItem>
+                 <SelectItem Value="4">Weekly</SelectItem>
+                 <SelectItem Value="5">Monthly</SelectItem>
+                 <SelectItem Value="6">Yearly</SelectItem>
+             </Select>
+             </Column>
+         </Row>
+    }
+    <Row>
+        <Column ColumnSize="ColumnSize.Is12">
+            <ApexChart TItem="StockPrice"
+                       XAxisType="XAxisType.Datetime" @ref=_chart>
+
+                <ApexCandleSeries TItem="StockPrice"
+                                  Items="_chartData"
+                                  Name="Apex Stock Price"
+                                  XValue="@(e => e.Date.ToUnixTimeMilliseconds())"
+                                  Open="@(e => e.Open)"
+                                  High="@(e => e.High)"
+                                  Low="@(e => e.Low)"
+                                  Close="@(e => e.Close)"
+                                  OrderByDescending="e=> e.X" />
+            </ApexChart>
+        </Column>
+    </Row>
+</div>
+
+@code{
+    int selectedValue;
+
+    [Parameter]
+    public string Ticker { get; set; }
+
+    [Parameter]
+    public bool Editable {get; set;}
+
+    private List<StockPrice> _chartData { get; set; }
+    private ApexChart<StockPrice> _chart;
+
+    public Chart()
+    {
+        _chartData = stockPrices;
+
+        Random r = new Random();
+        for (var i = 0; i < 5000; i++)
+        {
+            stockPrices.Add(new StockPrice
+                {
+                    Date = DateTime.Now - TimeSpan.FromDays(i),
+                    Open = r.Next(1, 10),
+                    High = r.Next(1, 15),
+                    Low = r.Next(1, 5),
+                    Close = r.Next(3, 15)
+                });
+        }
+    }
+
+    public List<StockPrice> stockPrices = new List<StockPrice>
+    {
+
+    };
+
+    async Task OnSelectedValueChanged(int value)
+    {
+        selectedValue = value;
+        _chartData = convertPrices();
+        await _chart.ClearAnnotationsAsync();
+        await _chart.ResetSeriesAsync(true, true);
+        await _chart.ZoomXAsync(new ZoomOptions
+        {
+            Start = _chartData.First().Date.ToUnixTimeMilliseconds(),
+                End = _chartData.Last().Date.ToUnixTimeMilliseconds(),
+        });
+        await _chart.RenderAsync();
+    }
+
+    public async Task AppendValue(IEnumerable<StockPrice> prices)
+    {
+        stockPrices.AddRange(prices);
+        await _chart.AppendDataAsync(prices);
+        await _chart.UpdateSeriesAsync();
+    }
+    private List<StockPrice> convertPrices(){
+
+        var selected = "";
+
+        switch (selectedValue)
+        {
+            case 1:
+                selected = "1m";
+                break;
+            case 2:
+                selected = "1h";
+                break;
+            case 3:
+                selected = "daily";
+                break;
+            case 4:
+                selected = "weekly";
+                break;
+            case 5:
+                selected = "monthly";
+                break;
+            case 6:
+                selected = "yearly";
+                break;
+            default:
+                selected = "1h";
+                break;
+        }
+
+        return Helpers.FinancialDataConverter.ConvertInterval(stockPrices, selected);
+    }
+}
