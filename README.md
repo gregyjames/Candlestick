@@ -1,3 +1,4 @@
+[![.NET](https://github.com/gregyjames/Candlestick/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/gregyjames/Candlestick/actions/workflows/dotnet.yml)
 [![NuGet latest version](https://badgen.net/nuget/v/Candlestick)](https://www.nuget.org/packages/Candlestick)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/Candlestick)
 # Candlestick
